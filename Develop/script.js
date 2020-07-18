@@ -13,14 +13,19 @@ $(document).ready(function () {
     currentDay.text(moment().format("llll"));
   }
 
+  // Gives the time-blocks the class attribute for each textarea
   function givePastPresentFuture() {
     for (let i = 0; i < 9; i++) {
       const now = moment(); // moment api
       let hour = now.hours();
       console.log(hour);
-      textboxId = "#textbox-" + (i + 9);
+
+      let textboxId = "#textbox-" + (i + 9);
+
       let textBox = $(textboxId);
+
       let textBoxHour = textBox.attr("data-hour");
+
       if (hour > textBoxHour) {
         textBox.attr("class", "past description");
       } else if (hour == textBoxHour) {
@@ -31,6 +36,7 @@ $(document).ready(function () {
     }
   }
 
+  // Creates and displays the time-blocks onto the html
   function displayTimeBlock() {
     for (let i = 0; i < 9; i++) {
       // Create elements
@@ -80,6 +86,10 @@ $(document).ready(function () {
     setInterval(updateClock, 2000);
   }
 
+  // calling the initial functions to start Work Day Scheduler
   displayTimeBlock();
   updateClock();
+  // get local storage vars
+
+  // saveBtn on click function add prevent default so that pressing enter isnt allowed
 });
