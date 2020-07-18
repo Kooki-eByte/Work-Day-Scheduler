@@ -6,7 +6,9 @@ $(document).ready(function () {
   console.log(hour);
 
   let currentDay = $("#currentDay");
+
   const divContainer = $(".container");
+
   function updateCurrentTime() {
     currentDay.text(moment().format("llll"));
   }
@@ -69,7 +71,7 @@ $(document).ready(function () {
   function updateClock() {
     updateCurrentTime();
     givePastPresentFuture();
-    setTimeout(updateClock(), 1000);
+    setInterval(updateClock, 2000);
   }
 
   displayTimeBlock();
