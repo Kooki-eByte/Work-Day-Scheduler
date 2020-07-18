@@ -27,7 +27,18 @@ You'll need to use the [Moment.js](https://momentjs.com/) library to work with d
 
 ## variables needed
 
+- Starting with the moment api we can ..
+
+  - Grab the current language
+
+  - variable to hold the moment()
+
+  - variable to hold the current hour and have it get looped thru possibly
+
+  - var for the day of the week.. **MAYBE** hold the month and day on there also if not then i can have a variable that can split the two with a comma that i can put already into the string.
+
 - Grab const of currentDay
+
 - Either create element with jQuery or just make it in the html
 
 ## functions needed
