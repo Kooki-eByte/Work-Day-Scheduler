@@ -15,6 +15,9 @@ $(document).ready(function () {
 
   function givePastPresentFuture() {
     for (let i = 0; i < 9; i++) {
+      const now = moment(); // moment api
+      let hour = now.hours();
+      console.log(hour);
       textboxId = "#textbox-" + (i + 9);
       let textBox = $(textboxId);
       let textBoxHour = textBox.attr("data-hour");
@@ -40,11 +43,14 @@ $(document).ready(function () {
       // Add attributes to all the elements
       // <div class="time-block">
       createTimeBlockDiv.attr("class", "time-block");
+
       // <form action="#" class="row">
       createForm.attr("class", "row");
+
       // <label for="time-of-day" class="hour">11:00</label>
       createLabel.attr("for", "time-of-day");
       createLabel.attr("class", "hour");
+
       // <textarea name="text" id="" class="description future" cols="90" rows="4"
       createTextArea.attr("name", "text");
       createTextArea.attr("id", "textbox-" + (i + 9));
@@ -69,8 +75,8 @@ $(document).ready(function () {
   }
 
   function updateClock() {
-    updateCurrentTime();
     givePastPresentFuture();
+    updateCurrentTime();
     setInterval(updateClock, 2000);
   }
 
