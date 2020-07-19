@@ -11,18 +11,12 @@ $(document).ready(function () {
   let agendaArray = [];
 
   function storeAgenda() {
-    let idx = JSON.parse(localStorage.getItem("idx"));
-    idx = $(this).attr("data-row");
+    let idx = $(this).attr("data-row");
 
     // Get the value that the user puts in
     let textboxId = "#textbox-" + idx;
     let textBox = $(textboxId);
-    let textAreaContent = JSON.parse(localStorage.getItem("textAreaContent"));
-    textAreaContent = textBox.val().trim();
-
-    if (textAreaContent === "") {
-      updateAgenda;
-    }
+    let textAreaContent = textBox.val().trim();
 
     let agendaObject = {
       agendaTodo: textAreaContent,
@@ -32,28 +26,18 @@ $(document).ready(function () {
     // ? have a loop here to check all of the objects to make sure that they are not a dope and so they can be replaced/Spliced if they are a dope and just put in the newest one
 
     agendaArray.push(agendaObject);
-    for (let i = 0; i > agenda.length; i++) {
-      if (idx == agenda[i].hour) {
-        return agendaArray.splice(agenda[i], 1);
-      }
-    }
-    localStorage.setItem("textAreaContent", JSON.stringify(textAreaContent));
-    localStorage.setItem("idx", JSON.stringify(idx));
     localStorage.setItem("agenda", JSON.stringify(agendaArray));
-    updateAgenda();
+    // updateAgenda();
   }
 
   function updateAgenda() {
     // let agenda = JSON.parse(localStorage.getItem("agenda"));
-    console.log(agenda[0].agendaTodo);
-    for (let i = 0; i < agenda.length; i++) {
-      //   let textboxId = "#textbox-" + (i + 9);
-      let newText = agenda[i].agendaTodo;
-      console.log(text);
-      console.log("------------");
-      console.log($("#textbox-" + (i + 9)).text(text));
-      console.log("------------");
-      $("#textbox-" + (i + 9)).text(text);
+    // console.log(agenda[0].agendaTodo);
+    if (localStorage.getItem("agenda") !== null) {
+      for (let i = 0; i < agenda.length; i++) {
+        //   let textboxId = "#textbox-" + (i + 9);
+        $("#textbox-" + agenda[i].hour).val(agenda[i].agendaTodo);
+      }
     }
   }
 
@@ -128,7 +112,6 @@ $(document).ready(function () {
       createTimeBlockDiv.append(createForm);
       divContainer.append(createTimeBlockDiv);
     }
-    updateAgenda();
   }
 
   function updateClock() {
@@ -140,7 +123,7 @@ $(document).ready(function () {
   // calling the initial functions to start Work Day Scheduler
   displayTimeBlock();
   updateClock();
-
+  updateAgenda();
   // get local storage vars
   // agenda , agendaTime , agendaArray
 
