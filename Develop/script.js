@@ -2,19 +2,59 @@ $(document).ready(function () {
   // globally call moment api and the hour to know when to change the attribute
   const now = moment(); // moment api
   let hour = now.hours(); // getting the hour at the moment
-
   let currentDay = $("#currentDay");
-
   const divContainer = $(".container");
-
   let agenda = JSON.parse(localStorage.getItem("agenda"));
+  //   console.log("agenda", agenda);
+
   //   let agendaTime = JSON.parse(localStorage.getItem("agendaTime"));
   let agendaArray = [];
 
   function storeAgenda() {
-    // Push text content value as well as time in a object and into the array
-    // let userAgenda = $();
-    console.log("I am pressed");
+    let idx = JSON.parse(localStorage.getItem("idx"));
+    idx = $(this).attr("data-row");
+
+    // Get the value that the user puts in
+    let textboxId = "#textbox-" + idx;
+    let textBox = $(textboxId);
+    let textAreaContent = JSON.parse(localStorage.getItem("textAreaContent"));
+    textAreaContent = textBox.val().trim();
+
+    if (textAreaContent === "") {
+      updateAgenda;
+    }
+
+    let agendaObject = {
+      agendaTodo: textAreaContent,
+      hour: idx,
+    };
+    // console.log(`Hour : ${idx} Text content : ${textAreaContent}`);
+    // ? have a loop here to check all of the objects to make sure that they are not a dope and so they can be replaced/Spliced if they are a dope and just put in the newest one
+
+    agendaArray.push(agendaObject);
+    for (let i = 0; i > agenda.length; i++) {
+      if (idx == agenda[i].hour) {
+        return agendaArray.splice(agenda[i], 1);
+      }
+    }
+    localStorage.setItem("textAreaContent", JSON.stringify(textAreaContent));
+    localStorage.setItem("idx", JSON.stringify(idx));
+    localStorage.setItem("agenda", JSON.stringify(agendaArray));
+    updateAgenda();
+  }
+
+  function updateAgenda() {
+    // let agenda = JSON.parse(localStorage.getItem("agenda"));
+    console.log(agenda[0].agendaTodo);
+    for (let i = 0; i < agenda.length; i++) {
+      //   let textboxId = "#textbox-" + (i + 9);
+      let newText = agenda[i].agendaTodo;
+      console.log(text);
+      console.log("------------");
+      console.log($("#textbox-" + (i + 9)).text(text));
+      console.log("------------");
+      $("#textbox-" + (i + 9)).text(text);
+    }
   }
 
   function updateCurrentTime() {
@@ -31,6 +71,7 @@ $(document).ready(function () {
 
       let textBox = $(textboxId);
 
+      //Grabbing the int of data-hour EX) 9, 10, 11, 12, 13 ...
       let textBoxHour = textBox.attr("data-hour");
 
       if (hour > textBoxHour) {
@@ -70,9 +111,11 @@ $(document).ready(function () {
       createTextArea.attr("data-hour", i + 9);
       createTextArea.attr("cols", "90");
       createTextArea.attr("rows", "4");
+      createTextArea.val("");
 
       // <button type="submit" class="fa fa-lock saveBtn">
       createSaveBtn.attr("type", "submit");
+      createSaveBtn.attr("data-row", i + 9);
       createSaveBtn.attr("class", "fa fa-lock saveBtn");
 
       // adding text to the label for the time
@@ -85,12 +128,13 @@ $(document).ready(function () {
       createTimeBlockDiv.append(createForm);
       divContainer.append(createTimeBlockDiv);
     }
+    updateAgenda();
   }
 
   function updateClock() {
     givePastPresentFuture();
     updateCurrentTime();
-    setInterval(updateClock, 2000);
+    setInterval(updateClock, 5000);
   }
 
   // calling the initial functions to start Work Day Scheduler
@@ -105,8 +149,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  $(".saveBtn").on("click", (event) => {
-    event.preventDefault();
-    storeAgenda();
-  });
+  // .text() will allow us to display the text into the box
+
+  $(document).on("click", ".saveBtn", storeAgenda);
 });
