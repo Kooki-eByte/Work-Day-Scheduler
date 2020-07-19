@@ -1,13 +1,21 @@
 $(document).ready(function () {
   // globally call moment api and the hour to know when to change the attribute
-  const currentLang = "en";
   const now = moment(); // moment api
   let hour = now.hours(); // getting the hour at the moment
-  console.log(hour);
 
   let currentDay = $("#currentDay");
 
   const divContainer = $(".container");
+
+  let agenda = JSON.parse(localStorage.getItem("agenda"));
+  //   let agendaTime = JSON.parse(localStorage.getItem("agendaTime"));
+  let agendaArray = [];
+
+  function storeAgenda() {
+    // Push text content value as well as time in a object and into the array
+    // let userAgenda = $();
+    console.log("I am pressed");
+  }
 
   function updateCurrentTime() {
     currentDay.text(moment().format("llll"));
@@ -18,7 +26,6 @@ $(document).ready(function () {
     for (let i = 0; i < 9; i++) {
       const now = moment(); // moment api
       let hour = now.hours();
-      console.log(hour);
 
       let textboxId = "#textbox-" + (i + 9);
 
@@ -89,7 +96,17 @@ $(document).ready(function () {
   // calling the initial functions to start Work Day Scheduler
   displayTimeBlock();
   updateClock();
+
   // get local storage vars
+  // agenda , agendaTime , agendaArray
 
   // saveBtn on click function add prevent default so that pressing enter isnt allowed
+  $(document).on("submit", (event) => {
+    event.preventDefault();
+  });
+
+  $(".saveBtn").on("click", (event) => {
+    event.preventDefault();
+    storeAgenda();
+  });
 });
