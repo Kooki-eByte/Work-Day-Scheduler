@@ -1,13 +1,8 @@
 $(document).ready(function () {
   // globally call moment api and the hour to know when to change the attribute
-  const now = moment(); // moment api
-  let hour = now.hours(); // getting the hour at the moment
   let currentDay = $("#currentDay");
   const divContainer = $(".container");
   let agenda = JSON.parse(localStorage.getItem("agenda"));
-  //   console.log("agenda", agenda);
-
-  //   let agendaTime = JSON.parse(localStorage.getItem("agendaTime"));
   let agendaArray = [];
 
   function storeAgenda() {
@@ -22,21 +17,20 @@ $(document).ready(function () {
       agendaTodo: textAreaContent,
       hour: idx,
     };
-    // console.log(`Hour : ${idx} Text content : ${textAreaContent}`);
-    // ? have a loop here to check all of the objects to make sure that they are not a dope and so they can be replaced/Spliced if they are a dope and just put in the newest one
 
     agendaArray.push(agendaObject);
     localStorage.setItem("agenda", JSON.stringify(agendaArray));
-    // updateAgenda();
   }
 
   function updateAgenda() {
-    // let agenda = JSON.parse(localStorage.getItem("agenda"));
-    // console.log(agenda[0].agendaTodo);
     if (localStorage.getItem("agenda") !== null) {
       for (let i = 0; i < agenda.length; i++) {
-        //   let textboxId = "#textbox-" + (i + 9);
         $("#textbox-" + agenda[i].hour).val(agenda[i].agendaTodo);
+        let agendaObject = {
+          agendaTodo: agenda[i].agendaTodo,
+          hour: agenda[i].hour,
+        };
+        agendaArray.push(agendaObject);
       }
     }
   }
@@ -90,12 +84,10 @@ $(document).ready(function () {
       createLabel.attr("class", "hour");
 
       // <textarea name="text" id="" class="description future" cols="90" rows="4"
-      createTextArea.attr("name", "text");
       createTextArea.attr("id", "textbox-" + (i + 9));
       createTextArea.attr("data-hour", i + 9);
       createTextArea.attr("cols", "90");
       createTextArea.attr("rows", "4");
-      createTextArea.val("");
 
       // <button type="submit" class="fa fa-lock saveBtn">
       createSaveBtn.attr("type", "submit");
@@ -124,15 +116,11 @@ $(document).ready(function () {
   displayTimeBlock();
   updateClock();
   updateAgenda();
-  // get local storage vars
-  // agenda , agendaTime , agendaArray
 
   // saveBtn on click function add prevent default so that pressing enter isnt allowed
   $(document).on("submit", (event) => {
     event.preventDefault();
   });
-
-  // .text() will allow us to display the text into the box
 
   $(document).on("click", ".saveBtn", storeAgenda);
 });
