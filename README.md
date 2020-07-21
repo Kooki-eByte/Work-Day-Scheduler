@@ -6,7 +6,7 @@ A simple calendar application that allows the user to save events for each hour 
 
 In the page you will have 9 Time-blocks spanning from 9 to 5 or as displayed 9 - 17.
 
-![Work Day Scheduler](WorkDayScheduler.png)
+![Work Day Scheduler](./Assets/WorkDayScheduler.png)
 
 - In each time block it provides a bit of info
   - The time is displayed on the left side
