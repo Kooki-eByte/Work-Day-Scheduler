@@ -109,7 +109,7 @@ $(document).ready(function () {
   function updateClock() {
     givePastPresentFuture();
     updateCurrentTime();
-    setInterval(updateClock, 5000);
+    setInterval(updateClock, 10000);
   }
 
   // calling the initial functions to start Work Day Scheduler
